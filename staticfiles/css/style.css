@@ -474,6 +474,8 @@ h1 {
     width: 120px;
     margin-left:  65px;
     margin-top: 5px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 60px;   
 }
 .teacher h3
