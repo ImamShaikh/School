@@ -701,10 +701,28 @@ img {
 }
 
 .teacher-img {
-  height: 320px;
-  width: 100%;
-  object-fit: cover;
-  transition: var(--transition-normal);
+    width: 120px !important;
+    height: 120px !important;
+
+    min-width: 120px !important;
+    min-height: 120px !important;
+
+    max-width: 120px !important;
+    max-height: 120px !important;
+
+    display: block !important;
+
+    margin: 0 auto 15px auto !important;
+
+    object-fit: cover !important;
+    object-position: center top !important;
+
+    border-radius: 50% !important;
+
+    flex-shrink: 0;
+
+    box-sizing: border-box;
+}
 }
 
 .teacher-card:hover .teacher-img {
