@@ -62,11 +62,28 @@
 
 /* Teacher Images */
 .card img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
+
+    width: 120px !important;
+    height: 120px !important;
+
+    min-width: 120px !important;
+    min-height: 120px !important;
+
+    max-width: 120px !important;
+    max-height: 120px !important;
+
+    display: block !important;
+
+    margin: 0 auto 15px auto !important;
+
+    object-fit: cover !important;
+    object-position: center top !important;
+
+    border-radius: 50% !important;
+
     flex-shrink: 0;
+
+    box-sizing: border-box;
 }
 
 /* Content Section */
