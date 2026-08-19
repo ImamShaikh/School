@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Photo Gallery - {{ info.name }}{% endblock %}
+{% block meta_description %}Explore our school infrastructure, campus grounds, student activity photographs, and cultural festivals gallery.{% endblock %}
+
+{% block main %}
+<!-- Header -->
+<section style="background: linear-gradient(135deg, var(--primary-navy), var(--primary-dark)); color: #fff; text-align: center; padding-block: 60px 40px;">
+  <div class="container">
+    <h1 style="color: #fff; margin-bottom: 0.5rem;">School Photo Gallery</h1>
+    <p style="color: var(--cyan-accent); font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Visual Showcase of Campus Life</p>
+  </div>
+</section>
+
+<!-- Grid & Filters -->
+<section>
+  <div class="container">
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="All">All Photos</button>
+      {% for cat in categories %}
+      <button class="filter-btn" data-filter="{{ cat }}">{{ cat }}</button>
+      {% endfor %}
+    </div>
+    
+    <div class="gallery-grid">
+      {% for img in gallery_imgs %}
+      <div class="gallery-item" data-category="{{ img.category }}">
+        <img src="{{ img.image.url }}" alt="{{ img.title|default:'School Photo' }}">
+        <div class="gallery-overlay">
+          <h3 style="color:#fff; font-size:1.1rem; margin-bottom:0.25rem;">{{ img.title|default:img.category }}</h3>
+          <span style="font-size:0.8rem; color:var(--cyan-accent); font-weight:600;">{{ img.category }}</span>
+        </div>
+      </div>
+      {% empty %}
+      <div style="grid-column: 1/-1; text-align: center; color: var(--secondary-text); padding: 4rem;">
+        <i class="fas fa-images" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1rem; display:block;"></i>
+        No gallery images uploaded yet.
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="lightbox" id="gallery-lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()" style="position: absolute; top: 2rem; right: 2rem; color: #fff; font-size: 2.5rem; cursor: pointer;">&times;</span>
+  <div class="lightbox-content">
+    <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImage(-1)"><i class="fas fa-chevron-left"></i></button>
+    <img src="" class="lightbox-img" alt="Gallery Lightbox">
+    <button class="lightbox-nav lightbox-next" onclick="changeLightboxImage(1)"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</div>
+{% endblock %}

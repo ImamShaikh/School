@@ -1,0 +1,63 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}{% if article %}Edit Article - Admin Portal{% else %}Publish News - Admin Portal{% endif %}{% endblock %}
+{% block page_title %}{% if article %}Edit News: {{ article.title }}{% else %}Publish New Article{% endif %}{% endblock %}
+
+{% block open %}
+<div style="margin-bottom: 1.5rem;">
+  <a href="{% url 'Appadmin:news-list' %}" class="btn-admin btn-admin-secondary">
+    <i class="fas fa-arrow-left"></i> Back to List
+  </a>
+</div>
+
+<div class="admin-card-form">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-group-admin">
+      <label for="title">Article Title <span style="color:var(--admin-danger);">*</span></label>
+      <input type="text" id="title" name="title" class="form-control-admin" value="{{ article.title|default:'' }}" required placeholder="Enter article title">
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="category">Category <span style="color:var(--admin-danger);">*</span></label>
+      <select id="category" name="category" class="form-control-admin" required>
+        <option value="General" {% if article.category == 'General' %}selected{% endif %}>General</option>
+        <option value="Admissions" {% if article.category == 'Admissions' %}selected{% endif %}>Admissions</option>
+        <option value="Achievements" {% if article.category == 'Achievements' %}selected{% endif %}>Achievements</option>
+        <option value="Events" {% if article.category == 'Events' %}selected{% endif %}>Events</option>
+        <option value="Announcements" {% if article.category == 'Announcements' %}selected{% endif %}>Announcements</option>
+      </select>
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="summary">Article Summary (Short Snippet) <span style="color:var(--admin-danger);">*</span></label>
+      <input type="text" id="summary" name="summary" class="form-control-admin" value="{{ article.summary|default:'' }}" required placeholder="Enter brief summary or subtitle">
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="content">Full Article Content <span style="color:var(--admin-danger);">*</span></label>
+      <textarea id="content" name="content" class="form-control-admin" rows="8" required placeholder="Write news article content here...">{{ article.content|default:'' }}</textarea>
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="image">Banner Image (Max 5MB, JPG/PNG/WebP)</label>
+      {% if article.image %}
+      <div style="margin-bottom: 1rem;">
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" style="width: 150px; height: 95px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 0.5rem;">
+        <span style="font-size: 0.8rem; color: var(--admin-text-muted);">Current Banner</span>
+      </div>
+      {% endif %}
+      <input type="file" id="image" name="image" class="form-control-admin" accept="image/png, image/jpeg, image/webp">
+    </div>
+    
+    <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+      <button type="submit" class="btn-admin btn-admin-primary" style="padding-inline: 2rem;">
+        <i class="fas fa-paper-plane"></i> Publish Article
+      </button>
+      <a href="{% url 'Appadmin:news-list' %}" class="btn-admin btn-admin-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}{% if teacher %}Edit Teacher - Admin Portal{% else %}Add Teacher - Admin Portal{% endif %}{% endblock %}
+{% block page_title %}{% if teacher %}Edit Teacher: {{ teacher.name }}{% else %}Add New Teacher{% endif %}{% endblock %}
+
+{% block open %}
+<div style="margin-bottom: 1.5rem;">
+  <a href="{% url 'Appadmin:teacher-list' %}" class="btn-admin btn-admin-secondary">
+    <i class="fas fa-arrow-left"></i> Back to List
+  </a>
+</div>
+
+<div class="admin-card-form">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="form-group-admin">
+      <label for="name">Teacher Name <span style="color:var(--admin-danger);">*</span></label>
+      <input type="text" id="name" name="name" class="form-control-admin" value="{{ teacher.name|default:'' }}" required placeholder="Enter teacher name">
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div class="form-group-admin">
+        <label for="subject">Teaching Subject <span style="color:var(--admin-danger);">*</span></label>
+        <input type="text" id="subject" name="subject" class="form-control-admin" value="{{ teacher.teach_sub|default:'' }}" required placeholder="e.g. Mathematics">
+      </div>
+      <div class="form-group-admin">
+        <label for="expertise">Expertise / Role <span style="color:var(--admin-danger);">*</span></label>
+        <input type="text" id="expertise" name="expertise" class="form-control-admin" value="{{ teacher.expertise|default:'' }}" required placeholder="e.g. Algebra & Geometry">
+      </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div class="form-group-admin">
+        <label for="contact">Contact Number (10 Digits) <span style="color:var(--admin-danger);">*</span></label>
+        <input type="text" id="contact" name="contact" class="form-control-admin" value="{{ teacher.p_no|default:'' }}" required maxlength="10" placeholder="e.g. 9960905064">
+      </div>
+      <div class="form-group-admin">
+        <label for="qualification">Qualifications</label>
+        <input type="text" id="qualification" name="qualification" class="form-control-admin" value="{{ teacher.qualification|default:'' }}" placeholder="e.g. B.Ed, M.Sc Mathematics">
+      </div>
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="experience">Years of Experience</label>
+      <input type="text" id="experience" name="experience" class="form-control-admin" value="{{ teacher.experience|default:'' }}" placeholder="e.g. 8 Years of Teaching">
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="bio">Teacher Biography</label>
+      <textarea id="bio" name="bio" class="form-control-admin" rows="4" placeholder="Enter teacher biography and background...">{{ teacher.bio|default:'' }}</textarea>
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="image">Teacher Photo (Max 5MB, JPG/PNG/WebP)</label>
+      {% if teacher.image %}
+      <div style="margin-bottom: 1rem;">
+        <img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" style="width: 100px; height: 120px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 0.5rem;">
+        <span style="font-size: 0.8rem; color: var(--admin-text-muted);">Current Photo</span>
+      </div>
+      {% endif %}
+      <input type="file" id="image" name="image" class="form-control-admin" accept="image/png, image/jpeg, image/webp">
+    </div>
+    
+    <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+      <button type="submit" class="btn-admin btn-admin-primary" style="padding-inline: 2rem;">
+        <i class="fas fa-save"></i> Save Profile
+      </button>
+      <a href="{% url 'Appadmin:teacher-list' %}" class="btn-admin btn-admin-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us - {{ info.name }}{% endblock %}
+{% block meta_description %}Get in touch with Govind Ashramshala Ekshiv. Find our office address, phone number, email ID, and send us online inquiries.{% endblock %}
+
+{% block main %}
+<!-- Header -->
+<section style="background: linear-gradient(135deg, var(--primary-navy), var(--primary-dark)); color: #fff; text-align: center; padding-block: 60px 40px;">
+  <div class="container">
+    <h1 style="color: #fff; margin-bottom: 0.5rem;">Contact Us</h1>
+    <p style="color: var(--cyan-accent); font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Get In Touch With Our Administration</p>
+  </div>
+</section>
+
+<!-- Main Contact Area -->
+<section>
+  <div class="container" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: flex-start;">
+    <!-- Contact Info Details -->
+    <div>
+      <h2 style="text-align: left; margin-bottom: 1.5rem; color: var(--primary-navy);">Contact Information</h2>
+      <p style="margin-bottom: 2rem;">If you have any questions, admission queries, or need help regarding student facilities, please feel free to drop a message or visit our campus office.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="width: 50px; height: 50px; background-color: #EFF6FF; color: var(--royal-blue); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink:0;">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div>
+            <h4 style="margin-bottom: 0.25rem; font-size: 1.1rem;">Campus Address</h4>
+            <p style="margin-bottom: 0; color: var(--secondary-text);">{{ info.address }}</p>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="width: 50px; height: 50px; background-color: #ECFDF5; color: #059669; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink:0;">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <div>
+            <h4 style="margin-bottom: 0.25rem; font-size: 1.1rem;">Phone Number</h4>
+            <p style="margin-bottom: 0; color: var(--secondary-text);">{{ info.phone }}</p>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="width: 50px; height: 50px; background-color: #FEF3C7; color: #D97706; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink:0;">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div>
+            <h4 style="margin-bottom: 0.25rem; font-size: 1.1rem;">Email Address</h4>
+            <p style="margin-bottom: 0; color: var(--secondary-text);">{{ info.email }}</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="width: 50px; height: 50px; background-color: #FDF2F8; color: #DB2777; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink:0;">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div>
+            <h4 style="margin-bottom: 0.25rem; font-size: 1.1rem;">Office Hours</h4>
+            <p style="margin-bottom: 0; color: var(--secondary-text);">{{ info.office_hours }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contact Form -->
+    <div style="background-color: var(--pure-white); border: 1px solid var(--border-color); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+      <h3 style="margin-bottom: 1.5rem; text-align: left;">Send us a message</h3>
+      
+      <form action="{% url 'school:contact' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Your Name <span style="color: var(--danger-color);">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address <span style="color: var(--danger-color);">*</span></label>
+          <input type="email" id="email" name="email" placeholder="e.g. parent@domain.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Contact Number <span style="color: var(--danger-color);">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit number" required maxlength="10">
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Your Message / Inquiry <span style="color: var(--danger-color);">*</span></label>
+          <textarea id="message" name="message" rows="5" placeholder="Enter details of your message..." required></textarea>
+        </div>
+
+        <!-- Captcha Component -->
+        <div class="form-group" style="background-color: var(--off-white); padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 2rem;">
+          <label style="margin-bottom: 0.75rem; display: block; font-weight: 600;">Security Check <span style="color: var(--danger-color);">*</span></label>
+          <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+            <div id="captcha-display" style="font-family: monospace; font-size: 1.5rem; font-weight: 700; background-color: var(--primary-navy); color: #fff; padding: 0.5rem 1.5rem; letter-spacing: 0.25em; border-radius: 4px; user-select: none;">
+              Loading...
+            </div>
+            <button id="captcha-refresh" class="btn" style="padding: 0.5rem 1rem; background-color: var(--border-color); color: var(--primary-navy); font-size: 0.9rem;" title="Refresh Captcha">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <input type="text" id="captcha-input" placeholder="Type captcha code above" required style="margin-bottom: 0; flex-grow: 1;">
+            <span id="captcha-status" style="font-weight: 600; font-size: 0.9rem; min-width: 90px;"></span>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; height: 50px;" disabled>
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

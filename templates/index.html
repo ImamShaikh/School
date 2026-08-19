@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header_class %}header-transparent{% endblock %}
+
+{% block main %}
+<!-- Hero Section -->
+<section class="hero" style="padding-top: 0; margin-top: -80px;">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>Welcome to Excellence</span>
+      </div>
+      <h1>{{ info.name|default:"Govind Ashramshala Ekshiv" }}</h1>
+      <p>{{ info.vision|default:"To nurture young minds with a holistic approach to learning." }}</p>
+      <div class="hero-actions">
+        <a href="{% url 'school:register' %}" class="btn btn-accent">Apply for Admissions</a>
+        <a href="{% url 'school:about' %}" class="btn btn-secondary" style="border-color: #fff; color: #fff;">Explore About Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container stats-grid">
+    <div class="stat-card-item">
+      <div class="stat-icon"><i class="fa fa-user-graduate"></i></div>
+      <div class="stat-number">235+</div>
+      <div class="stat-label">Students Enrolled</div>
+    </div>
+    <div class="stat-card-item">
+      <div class="stat-icon"><i class="fa fa-chalkboard-teacher"></i></div>
+      <div class="stat-number">18+</div>
+      <div class="stat-label">Certified Teachers</div>
+    </div>
+    <div class="stat-card-item">
+      <div class="stat-icon"><i class="fa fa-award"></i></div>
+      <div class="stat-number">99%</div>
+      <div class="stat-label">Success Passing Rate</div>
+    </div>
+    <div class="stat-card-item">
+      <div class="stat-icon"><i class="fa fa-star"></i></div>
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Parents Satisfaction</div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us / Features -->
+<section class="features-section">
+  <div class="container">
+    <h2>Why Choose Our School</h2>
+    <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">We provide a safe, high-quality, and modern environment that fosters intellectual and moral development.</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="fa fa-video"></i></div>
+        <h3>CCTV Surveillance</h3>
+        <p>Equipped with security systems to ensure a safe, secure, and disciplined learning environment for your child.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="fa fa-laptop"></i></div>
+        <h3>Modern Tech Lab</h3>
+        <p>A well-equipped computer lab to enhance digital literacy, programming, and technical competency.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="fa fa-running"></i></div>
+        <h3>Sports Excellence</h3>
+        <p>Promoting physical fitness, leadership, and teamwork through sports, playfields, and indoor games.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="fa fa-book-open"></i></div>
+        <h3>Rich Library</h3>
+        <p>A treasure trove of knowledge and books to inspire reading habits and independent research.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="fa fa-school"></i></div>
+        <h3>Spacious Classrooms</h3>
+        <p>Ventilated, comfortable classrooms with modern learning aids ensuring focus and academic excellence.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="fa fa-user-shield"></i></div>
+        <h3>Holistic Care</h3>
+        <p>Dedicated staff ensuring character building, moral values, and social responsibility alongside education.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Preview -->
+<section class="about-preview" style="background-color: var(--off-white);">
+  <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    <div>
+      <img src="{% static 'Image/main building of govind ashram shala.jpg' %}" alt="Main School Campus" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; height: 380px; object-fit: cover;">
+    </div>
+    <div>
+      <h2 style="text-align: left; margin-bottom: 1rem;">About Our Institution</h2>
+      <p style="font-size: 1.1rem; color: var(--primary-navy); font-weight: 500;">Developing Tomorrow's Leaders Today</p>
+      <p>{{ info.history|default:"Govind Ashram Shala Ekshiv is a premier school committed to bringing educational accessibility and top-notch holistic growth to students." }}</p>
+      <p>We blend traditional values of respect, discipline, and community with modern technology and digital skills to prepare children for global futures.</p>
+      <div style="margin-top: 2rem;">
+        <a href="{% url 'school:about' %}" class="btn btn-primary">Learn More About Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teachers Section -->
+<section class="teachers-section">
+  <div class="container">
+    <h2>Our Dedicated Teachers</h2>
+    <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">Meet the qualified and passionate educators driving our classroom success.</p>
+    
+    <div class="teachers-grid">
+      {% for teacher in teachers %}
+      <div class="teacher-card" data-qualification="{{ teacher.qualification }}" data-experience="{{ teacher.experience }}" data-bio="{{ teacher.bio }}">
+        {% if teacher.image %}
+        <img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" class="teacher-img">
+        {% else %}
+        <img src="{% static 'Image/Teachers.png' %}" alt="{{ teacher.name }}" class="teacher-img">
+        {% endif %}
+        <div class="teacher-info">
+          <h3>{{ teacher.name }}</h3>
+          <p class="teacher-title">{{ teacher.teach_sub }}</p>
+          <p class="teacher-subject">{{ teacher.expertise }}</p>
+          <button class="btn btn-secondary view-profile-btn" style="padding: 0.5rem 1.25rem; font-size: 0.85rem; width: 100%;">View Profile</button>
+        </div>
+      </div>
+      {% empty %}
+      <div style="grid-column: 1/-1; text-align: center; color: var(--secondary-text);">No teacher profiles added yet.</div>
+      {% endfor %}
+    </div>
+    
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="{% url 'school:teachers' %}" class="btn btn-secondary">View All Teachers</a>
+    </div>
+  </div>
+</section>
+
+<!-- Events Preview -->
+<section class="events-preview" style="background-color: var(--off-white);">
+  <div class="container">
+    <h2>Recent & Upcoming Events</h2>
+    <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">Participate in our vibrant campus life, academic celebrations, and sports events.</p>
+    
+    <div class="events-list">
+      {% for event in events %}
+      <div class="event-strip">
+        <div class="event-date-block">
+          <span class="month">{{ event.date|date:"b" }}</span>
+          <span class="day">{{ event.date|date:"d" }}</span>
+        </div>
+        {% if event.image %}
+        <img src="{{ event.image.url }}" alt="{{ event.title }}" style="width: 140px; height: 100px; border-radius: var(--radius-sm); object-fit: cover;">
+        {% endif %}
+        <div class="event-strip-details">
+          <h3 style="text-align: left; font-size: 1.35rem; margin-bottom: 0.25rem;">{{ event.title }}</h3>
+          <p style="margin-bottom: 0.5rem;">{{ event.description|truncatewords:20 }}</p>
+          <div class="event-meta">
+            <span><i class="fa fa-clock"></i> {{ event.time|time:"h:i A" }}</span>
+            <span><i class="fa fa-map-marker-alt"></i> {{ event.venue }}</span>
+            {% if event.registration_info %}
+            <span><i class="fa fa-info-circle"></i> {{ event.registration_info }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div style="text-align: center; color: var(--secondary-text);">No scheduled events at this time.</div>
+      {% endfor %}
+    </div>
+    
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="{% url 'school:events' %}" class="btn btn-secondary">View All Events</a>
+    </div>
+  </div>
+</section>
+
+<!-- Admissions CTA Banner -->
+<section class="admission-section" style="background: linear-gradient(135deg, var(--royal-blue), var(--cyan-accent)); color: #fff; text-align: center; padding-block: 60px;">
+  <div class="container">
+    <h2 style="color: #fff; margin-bottom: 1rem; font-size: 2.25rem;">Enroll Your Child for the Academic Year {% now "Y" %}</h2>
+    <p style="color: #fff; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem;">Secure your child's future today. Easy online registration takes less than 5 minutes.</p>
+    <a href="{% url 'school:register' %}" class="btn" style="background-color: var(--academic-gold); color: var(--primary-dark); font-weight: 700; padding: 1rem 2.5rem; font-size: 1.1rem;">Start Admission Process</a>
+  </div>
+</section>
+{% endblock %}

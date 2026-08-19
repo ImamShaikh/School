@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}School News & Announcements - {{ info.name }}{% endblock %}
+{% block meta_description %}Read about our latest academic announcements, sports achievements, admissions timelines, and press releases.{% endblock %}
+
+{% block main %}
+<!-- Header -->
+<section style="background: linear-gradient(135deg, var(--primary-navy), var(--primary-dark)); color: #fff; text-align: center; padding-block: 60px 40px;">
+  <div class="container">
+    <h1 style="color: #fff; margin-bottom: 0.5rem;">News & Announcements</h1>
+    <p style="color: var(--cyan-accent); font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Announcements, Achievements & Updates</p>
+  </div>
+</section>
+
+<!-- Grid & Filters -->
+<section>
+  <div class="container">
+    <!-- Category Tabs -->
+    <div class="gallery-filters" style="margin-bottom: 3rem;">
+      {% for cat in categories %}
+      <a href="?category={{ cat }}" class="filter-btn {% if selected_category == cat %}active{% endif %}" style="display:inline-block; text-decoration:none; color:inherit;">
+        {{ cat }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- News Grid -->
+    <div class="news-grid">
+      {% for article in page_obj %}
+      <article class="news-card">
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="news-card-img">
+        {% else %}
+        <div style="height:200px; background-color:var(--off-white); display:flex; align-items:center; justify-content:center;">
+          <i class="fas fa-newspaper" style="font-size:3rem; color:var(--border-color);"></i>
+        </div>
+        {% endif %}
+        
+        <div class="news-card-body">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+            <span class="badge badge-info">{{ article.category }}</span>
+            <small style="color:var(--secondary-text); font-weight:500;">{{ article.date|date:"d M Y" }}</small>
+          </div>
+          <h3 class="news-card-title" style="text-align: left; font-size:1.25rem;">
+            <a href="{% url 'school:news-detail' article.slug %}">{{ article.title }}</a>
+          </h3>
+          <p style="font-size:0.9rem; margin-bottom:1.5rem;">{{ article.summary }}</p>
+          <a href="{% url 'school:news-detail' article.slug %}" style="font-weight:600; color:var(--royal-blue); display:inline-flex; align-items:center; gap:0.5rem;">
+            Read Full Article <i class="fas fa-arrow-right" style="font-size:0.8rem;"></i>
+          </a>
+        </div>
+      </article>
+      {% empty %}
+      <div style="grid-column: 1/-1; text-align: center; color: var(--secondary-text); padding: 4rem;">
+        <i class="fas fa-newspaper" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1rem; display:block;"></i>
+        No articles found in this category.
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div style="display:flex; justify-content:center; gap:0.5rem; margin-top:4rem;">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}&category={{ selected_category }}" class="filter-btn" style="text-decoration:none;"><i class="fas fa-chevron-left"></i> Prev</a>
+      {% endif %}
+      
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <span class="filter-btn active">{{ num }}</span>
+        {% else %}
+        <a href="?page={{ num }}&category={{ selected_category }}" class="filter-btn" style="text-decoration:none;">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&category={{ selected_category }}" class="filter-btn" style="text-decoration:none;">Next <i class="fas fa-chevron-right"></i></a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

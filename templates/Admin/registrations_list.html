@@ -1,0 +1,86 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}Manage Registrations - Admin Portal{% endblock %}
+{% block page_title %}Student Admission Registrations{% endblock %}
+
+{% block open %}
+<div class="table-container">
+  <div class="table-header">
+    <div class="table-title">All Registration Submissions</div>
+  </div>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Mother's Name</th>
+        <th>DOB & Gender</th>
+        <th>Category / Religion</th>
+        <th>Contact & Aadhaar</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reg in regs %}
+      <tr>
+        <td>
+          <div style="font-weight: 600;">{{ reg.stud_name }}</div>
+          <small style="color: var(--admin-text-muted);">Submitted: {{ reg.created_at|date:"d M Y" }}</small>
+        </td>
+        <td>{{ reg.M_name }}</td>
+        <td>{{ reg.DOB }} <br> <small style="color: var(--admin-text-muted);">{{ reg.gender }}</small></td>
+        <td>{{ reg.category }} <br> <small style="color: var(--admin-text-muted);">{{ reg.religion }}</small></td>
+        <td>
+          <div>{{ reg.M_no }}</div>
+          <div><small>Student UID: {{ reg.C_adhar }}</small></div>
+          <div><small>Parent UID: {{ reg.P_adhar }}</small></div>
+        </td>
+        <td>
+          <div>{{ reg.street }}, {{ reg.landmark }}</div>
+          <small style="color: var(--admin-text-muted);">{{ reg.state }} - {{ reg.pin_code }}</small>
+        </td>
+        <td>
+          <span class="status-badge {% if reg.status == 'Approved' %}status-approved{% elif reg.status == 'Rejected' %}status-rejected{% else %}status-pending{% endif %}">
+            {{ reg.status }}
+          </span>
+        </td>
+        <td>
+          <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+            {% if reg.status != 'Approved' %}
+            <form action="{% url 'Appadmin:registration-status-update' reg.id 'Approved' %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-admin btn-admin-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; width: 100%; justify-content: center;">
+                <i class="fas fa-check"></i> Approve
+              </button>
+            </form>
+            {% endif %}
+            
+            {% if reg.status != 'Rejected' %}
+            <form action="{% url 'Appadmin:registration-status-update' reg.id 'Rejected' %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-admin btn-admin-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; width: 100%; justify-content: center; color: var(--admin-danger); border-color: var(--admin-danger);">
+                <i class="fas fa-times"></i> Reject
+              </button>
+            </form>
+            {% endif %}
+            
+            <form action="{% url 'Appadmin:registration-delete' reg.id %}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this registration?');">
+              {% csrf_token %}
+              <button type="submit" class="btn-admin btn-admin-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; width: 100%; justify-content: center;">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" style="text-align: center; color: var(--admin-text-muted); padding: 3rem;">No registration records found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

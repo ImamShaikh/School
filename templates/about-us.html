@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us - {{ info.name }}{% endblock %}
+{% block meta_description %}Learn about the history, vision, mission, and distinguished leadership team of Govind Ashramshala Ekshiv.{% endblock %}
+
+{% block main %}
+<!-- About Banner -->
+<section style="background: linear-gradient(135deg, var(--primary-navy), var(--primary-dark)); color: #fff; text-align: center; padding-block: 60px 40px;">
+  <div class="container">
+    <h1 style="color: #fff; margin-bottom: 0.5rem;">About Our Institution</h1>
+    <p style="color: var(--cyan-accent); font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">History, Mission & Leadership</p>
+  </div>
+</section>
+
+<!-- About Details -->
+<section>
+  <div class="container" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: flex-start;">
+    <div>
+      <h2 style="text-align: left; margin-bottom: 1.5rem; color: var(--primary-navy);">Our Legacy & Trust</h2>
+      <p style="font-size: 1.1rem; line-height: 1.8; color: var(--primary-navy); font-weight: 500; margin-bottom: 1.5rem;">
+        Founded in 1994, Govind Ashramshala has been a beacon of quality education and holistic development for students in the region.
+      </p>
+      <p style="margin-bottom: 1.5rem;">
+        The school operates under the esteemed guidance of the **Dnyanganga Shikshan Prasarak Mandal**, an educational trust committed to shaping young minds through academic excellence and value-based learning. At the heart of Govind Ashramshala is a team of dedicated leaders and educators who strive to create an environment where every child is encouraged to learn, grow, and succeed.
+      </p>
+      
+      <div style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div style="background-color: var(--off-white); padding: 2rem; border-radius: var(--radius-md); border-left: 4px solid var(--royal-blue);">
+          <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;"><i class="fas fa-eye" style="color:var(--royal-blue); margin-right: 0.5rem;"></i> Our Vision</h3>
+          <p style="font-size: 0.95rem; margin-bottom: 0;">{{ info.vision }}</p>
+        </div>
+        <div style="background-color: var(--off-white); padding: 2rem; border-radius: var(--radius-md); border-left: 4px solid var(--cyan-accent);">
+          <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;"><i class="fas fa-bullseye" style="color:var(--cyan-accent); margin-right: 0.5rem;"></i> Our Mission</h3>
+          <p style="font-size: 0.95rem; margin-bottom: 0;">{{ info.mission }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <img src="{% static 'Image/main building of govind ashram shala1.jpg' %}" alt="School Building" style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); height: 320px; object-fit: cover; margin-bottom: 2rem;">
+      
+      <div style="background-color: var(--primary-navy); color: #fff; padding: 2.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+        <h3 style="color:#fff; margin-bottom: 1rem;"><i class="fas fa-trophy" style="color:var(--academic-gold); margin-right:0.5rem;"></i> Key Achievements</h3>
+        <p style="color: var(--off-white); font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">
+          {{ info.achievements|linebreaksbr }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Leadership Panel -->
+<section style="background-color: var(--off-white);">
+  <div class="container">
+    <h2>Distinguished Leadership</h2>
+    <p style="text-align: center; max-width: 600px; margin: 0 auto 4rem;">The visionaries driving academic structure, infrastructure development, and community support at our institution.</p>
+    
+    <div style="display: flex; flex-direction: column; gap: 4rem;">
+      <!-- Chairman -->
+      <div style="display: grid; grid-template-columns: 280px 1fr; gap: 3rem; background-color: var(--pure-white); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); align-items: center;">
+        <img src="{% static 'Image/chairman-removebg-preview.png' %}" alt="Adv. Ram Hari Rupanawar" style="width: 100%; height: 280px; object-fit: contain; background-color: var(--off-white); border-radius: var(--radius-md);">
+        <div>
+          <span class="badge badge-info" style="margin-bottom: 0.5rem;">Chairman</span>
+          <h3 style="text-align: left; font-size: 1.75rem; margin-bottom: 0.5rem;">Adv. Ram Hari Rupanawar</h3>
+          <p style="color: var(--royal-blue); font-weight: 600; font-size: 0.95rem; margin-bottom: 1.25rem;">Ex-MLC | Congressman | Advocate</p>
+          <p style="margin-bottom: 0; line-height: 1.7;">
+            Mr. Ram Hari Rupanawar is a visionary leader, dedicated public servant, and passionate advocate for education and social welfare. As the Chairman of Govind Ashramshala, he has played a pivotal role in transforming the institution into a hub of quality education, discipline, and holistic development.
+            With a distinguished career in public service, Mr. Rupanawar currently serves as a respected Member of the Legislative Council (MLC). Under his dynamic leadership, Govind Ashramshala continues to grow as a beacon of opportunity for students in rural and tribal areas.
+          </p>
+        </div>
+      </div>
+      
+      <!-- Headmaster -->
+      <div style="display: grid; grid-template-columns: 280px 1fr; gap: 3rem; background-color: var(--pure-white); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); align-items: center;">
+        <img src="{% static 'Image/Headmaster-removebg-preview.png' %}" alt="Mr. Mahamad Kasim Shaikh" style="width: 100%; height: 280px; object-fit: contain; background-color: var(--off-white); border-radius: var(--radius-md);">
+        <div>
+          <span class="badge badge-warning" style="margin-bottom: 0.5rem;">Headmaster / Principal</span>
+          <h3 style="text-align: left; font-size: 1.75rem; margin-bottom: 0.5rem;">Mr. Mahamad Kasim Shaikh</h3>
+          <p style="color: var(--royal-blue); font-weight: 600; font-size: 0.95rem; margin-bottom: 1.25rem;">Headmaster Academics</p>
+          <p style="margin-bottom: 0; line-height: 1.7;">
+            Mr. Mahamad Kasim Shaikh is an experienced and dedicated educator who has been the driving force behind the academic excellence and disciplined environment of Govind Ashramshala. With a deep commitment to nurturing young minds, he brings a unique blend of leadership, compassion, and educational expertise to the institution.
+            He leads the academic faculty with integrity, encouraging innovative classroom teaching methods, regular assessments, and robust character development.
+          </p>
+        </div>
+      </div>
+      
+      <!-- Secretary -->
+      <div style="display: grid; grid-template-columns: 280px 1fr; gap: 3rem; background-color: var(--pure-white); padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); align-items: center;">
+        <img src="{% static 'Image/Secretary1.png' %}" alt="Mr. Adinath Rupanawar" style="width: 100%; height: 280px; object-fit: contain; background-color: var(--off-white); border-radius: var(--radius-md);">
+        <div>
+          <span class="badge badge-success" style="margin-bottom: 0.5rem;">Secretary</span>
+          <h3 style="text-align: left; font-size: 1.75rem; margin-bottom: 0.5rem;">Mr. Adinath Rupanawar</h3>
+          <p style="color: var(--royal-blue); font-weight: 600; font-size: 0.95rem; margin-bottom: 1.25rem;">Ayurvedic Professional | Administrator</p>
+          <p style="margin-bottom: 0; line-height: 1.7;">
+            Mr. Adinath Rupanawar is a dynamic and dedicated individual who brings a unique combination of healthcare expertise and social commitment to his role as Secretary of Govind Ashramshala. As Secretary, he plays a crucial role in the strategic planning, smooth administration, and financial health of the institution. He advocates for an education system that blends academic learning with cultural values and discipline.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

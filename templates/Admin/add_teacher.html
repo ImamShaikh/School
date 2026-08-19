@@ -1,0 +1,37 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+{% block open %}
+<div class="form-container">
+    <h2>Add Teacher Details</h2>
+    <form action="/add" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="name">Name of Teacher</label>
+            <input type="text" id="name" placeholder="Enter teacher's name" required name="name" >
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Teaching Subject</label>
+            <input type="text" id="subject" placeholder="Enter subject" required name="subject" >
+        </div>
+
+        <div class="form-group">
+            <label for="expertise">Expertise</label>
+            <input type="text" id="expertise" placeholder="Enter expertise" required name="expertise" >
+        </div>
+
+        <div class="form-group">
+            <label for="image">Profile Photo</label>
+            <input type="file" id="image" required name="image" >
+        </div>
+
+        <div class="form-group">
+            <label for="contact">Contact No.</label>
+            <input type="tel" id="contact" placeholder="Enter contact number" required name="contact" >
+        </div>
+
+        <button type="submit" class="submit-btn">Add Teacher</button>
+    </form>
+</div>
+{% endblock open %}

@@ -1,0 +1,83 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}Manage Dashboard Users - Admin Portal{% endblock %}
+{% block page_title %}Trusted Dashboard Users{% endblock %}
+
+{% block open %}
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: flex-end;">
+  <a href="{% url 'Appadmin:user-add' %}" class="btn-admin btn-admin-primary">
+    <i class="fas fa-user-plus"></i> Add Trusted User
+  </a>
+</div>
+
+<div class="table-container">
+  <div class="table-header">
+    <div class="table-title">Dashboard Staff Accounts</div>
+  </div>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email ID</th>
+        <th>Contact & Address</th>
+        <th>Access Level</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>
+          <div style="font-weight: 600; display:flex; align-items:center; gap:0.5rem;">
+            <i class="fas fa-user-shield"
+              style="color: {% if u.is_superuser %}var(--admin-accent){% else %}var(--admin-text-muted){% endif %};"></i>
+            {{ u.username }}
+          </div>
+          <small style="color:var(--admin-text-muted);">Last Login: {{ u.last_login|date:"d M Y, h:i A"|default:"Never"
+            }}</small>
+        </td>
+        <td>{{ u.first_name }} {{ u.last_name }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <div>{{ u.profile.phone_no|default:"N/A" }}</div>
+          <small style="color:var(--admin-text-muted);">{{ u.profile.address|default:"N/A" }}</small>
+        </td>
+        <td>
+          {% if u.is_superuser %}
+          <span class="status-badge status-approved">Super Admin</span>
+          {% else %}
+          <span class="status-badge status-pending">Trusted Editor</span>
+          {% endif %}
+        </td>
+        <td>
+          <div class="actions-cell">
+            <a href="{% url 'Appadmin:user-edit' u.id %}" class="btn-admin btn-admin-secondary">
+              <i class="fas fa-edit"></i> Edit Details
+            </a>
+
+            {% if u != request.user %}
+            <form action="{% url 'Appadmin:user-delete' u.id %}" method="post" style="display:inline;"
+              onsubmit="return confirm('Are you sure you want to revoke access and delete user {{ u.username }}?');">
+              {% csrf_token %}
+              <button type="submit" class="btn-admin btn-admin-danger">
+                <i class="fas fa-trash-alt"></i> Revoke
+              </button>
+            </form>
+            {% else %}
+            <span style="font-size: 0.8rem; color:var(--admin-text-muted); font-style:italic;">Logged In</span>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" style="text-align: center; color: var(--admin-text-muted); padding: 3rem;">No staff users added.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

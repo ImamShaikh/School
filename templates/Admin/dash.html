@@ -1,0 +1,124 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}Dashboard - Govind Ashramshala Admin{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block open %}
+<!-- Statistics Cards -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon"><i class="fa fa-users"></i></div>
+    <div class="stat-info">
+      <h3>Registered Students</h3>
+      <div class="num">{{ total_registrations }}</div>
+    </div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-icon" style="background-color: #ECFDF5; color: #059669;"><i class="fa fa-envelope-open-text"></i></div>
+    <div class="stat-info">
+      <h3>Messages</h3>
+      <div class="num">{{ total_messages }}</div>
+    </div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-icon" style="background-color: #FEF3C7; color: #D97706;"><i class="fa fa-chalkboard-teacher"></i></div>
+    <div class="stat-info">
+      <h3>Teachers</h3>
+      <div class="num">{{ total_teachers }}</div>
+    </div>
+  </div>
+  
+  <div class="stat-card">
+    <div class="stat-icon" style="background-color: #FDF2F8; color: #DB2777;"><i class="fa fa-calendar-alt"></i></div>
+    <div class="stat-info">
+      <h3>Events</h3>
+      <div class="num">{{ total_events }}</div>
+    </div>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+  <!-- Recent Registrations -->
+  <div class="table-container">
+    <div class="table-header">
+      <div class="table-title">Recent Admissions</div>
+      <a href="{% url 'Appadmin:registration-list' %}" class="btn-admin btn-admin-secondary">View All</a>
+    </div>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Class/Category</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reg in recent_regs %}
+        <tr>
+          <td>
+            <div style="font-weight: 600;">{{ reg.stud_name }}</div>
+            <small style="color: var(--admin-text-muted);">{{ reg.M_no }}</small>
+          </td>
+          <td>{{ reg.category }}</td>
+          <td>
+            <span class="status-badge {% if reg.status == 'Approved' %}status-approved{% elif reg.status == 'Rejected' %}status-rejected{% else %}status-pending{% endif %}">
+              {{ reg.status }}
+            </span>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="text-align: center; color: var(--admin-text-muted);">No recent registrations.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recent Messages -->
+  <div class="table-container">
+    <div class="table-header">
+      <div class="table-title">Recent Messages</div>
+      <a href="{% url 'Appadmin:message-list' %}" class="btn-admin btn-admin-secondary">View All</a>
+    </div>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Sender</th>
+          <th>Message</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in recent_msgs %}
+        <tr>
+          <td>
+            <div style="font-weight: 600;">{{ msg.name }}</div>
+            <small style="color: var(--admin-text-muted);">{{ msg.phone_no }}</small>
+          </td>
+          <td>
+            <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              {{ msg.message }}
+            </div>
+          </td>
+          <td>
+            {% if msg.is_read %}
+            <span class="status-badge status-approved">Read</span>
+            {% else %}
+            <span class="status-badge status-pending">New</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="text-align: center; color: var(--admin-text-muted);">No new messages.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

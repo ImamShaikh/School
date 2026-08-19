@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Teachers Directory - {{ info.name }}{% endblock %}
+{% block meta_description %}Meet the experienced, certified teaching faculty and instructors at Govind Ashramshala Ekshiv.{% endblock %}
+
+{% block main %}
+<!-- Header -->
+<section style="background: linear-gradient(135deg, var(--primary-navy), var(--primary-dark)); color: #fff; text-align: center; padding-block: 60px 40px;">
+  <div class="container">
+    <h1 style="color: #fff; margin-bottom: 0.5rem;">Our Teaching Faculty</h1>
+    <p style="color: var(--cyan-accent); font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Educators, Mentors & Guides</p>
+  </div>
+</section>
+
+<!-- Grid -->
+<section>
+  <div class="container">
+    <h2 style="margin-bottom: 1rem;">Meet Our Staff</h2>
+    <p style="text-align: center; max-width: 650px; margin: 0 auto 3rem; color: var(--secondary-text);">
+      Our teachers are committed to building academic excellence and moral character in every student through creative learning and care.
+    </p>
+    
+    <div class="teachers-grid">
+      {% for teacher in teachers %}
+      <div class="teacher-card" data-qualification="{{ teacher.qualification }}" data-experience="{{ teacher.experience }}" data-bio="{{ teacher.bio }}">
+        {% if teacher.image %}
+        <img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" class="teacher-img">
+        {% else %}
+        <img src="{% static 'Image/Teachers.png' %}" alt="{{ teacher.name }}" class="teacher-img">
+        {% endif %}
+        <div class="teacher-info">
+          <h3>{{ teacher.name }}</h3>
+          <p class="teacher-title">{{ teacher.teach_sub }}</p>
+          <p class="teacher-subject">{{ teacher.expertise }}</p>
+          <button class="btn btn-secondary view-profile-btn" style="padding: 0.5rem 1.25rem; font-size: 0.85rem; width: 100%;">View Profile</button>
+        </div>
+      </div>
+      {% empty %}
+      <div style="grid-column: 1/-1; text-align: center; color: var(--secondary-text); padding: 4rem;">
+        <i class="fas fa-user-friends" style="font-size: 3rem; color: var(--border-color); margin-bottom: 1rem; display:block;"></i>
+        No faculty profiles added at this time.
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

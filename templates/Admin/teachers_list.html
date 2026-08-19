@@ -1,0 +1,80 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}Manage Teachers - Admin Portal{% endblock %}
+{% block page_title %}School Teachers Directory{% endblock %}
+
+{% block open %}
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: flex-end;">
+  <a href="{% url 'Appadmin:teacher-add' %}" class="btn-admin btn-admin-primary">
+    <i class="fas fa-plus"></i> Add New Teacher
+  </a>
+</div>
+
+<div class="table-container">
+  <div class="table-header">
+    <div class="table-title">All Teacher Profiles</div>
+  </div>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Name</th>
+        <th>Teach Subject</th>
+        <th>Expertise Area</th>
+        <th>Contact Number</th>
+        <th>Qualifications & Exp</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for teacher in teachers %}
+      <tr>
+        <td>
+          {% if teacher.image %}
+          <img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 4px;">
+          {% else %}
+          <div style="width: 50px; height: 60px; background-color: var(--admin-bg); display:flex; align-items:center; justify-content:center; border-radius:4px;">
+            <i class="fas fa-user" style="color:var(--admin-text-muted);"></i>
+          </div>
+          {% endif %}
+        </td>
+        <td>
+          <div style="font-weight: 600;">{{ teacher.name }}</div>
+          {% if teacher.bio %}
+          <small style="color: var(--admin-text-muted); display: block; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            {{ teacher.bio }}
+          </small>
+          {% endif %}
+        </td>
+        <td>{{ teacher.teach_sub }}</td>
+        <td>{{ teacher.expertise }}</td>
+        <td>{{ teacher.p_no }}</td>
+        <td>
+          <div><strong>Qual:</strong> {{ teacher.qualification|default:"N/A" }}</div>
+          <div><strong>Exp:</strong> {{ teacher.experience|default:"N/A" }}</div>
+        </td>
+        <td>
+          <div class="actions-cell">
+            <a href="{% url 'Appadmin:teacher-edit' teacher.id %}" class="btn-admin btn-admin-secondary">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            
+            <form action="{% url 'Appadmin:teacher-delete' teacher.id %}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete {{ teacher.name }}?');">
+              {% csrf_token %}
+              <button type="submit" class="btn-admin btn-admin-danger">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7" style="text-align: center; color: var(--admin-text-muted); padding: 3rem;">No teacher profiles added yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

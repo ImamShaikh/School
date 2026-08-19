@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Tags -->
+  <title>{% block title %}{{ info.name|default:"Govind Ashramshala Ekshiv" }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Govind Ashramshala Ekshiv is a premier educational institution providing high-quality school and residential education with excellent sports and academic records.{% endblock %}">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Font Awesome 6+ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- =====================================================================
+       HEADER / NAVIGATION
+       ===================================================================== -->
+  <header id="main-header" class="{% block header_class %}header-solid{% endblock %}">
+    <a href="{% url 'school:home' %}" class="header-logo-link">
+      {% if info.logo %}
+        <img src="{{ info.logo.url }}" class="logo" alt="{{ info.name }}">
+      {% else %}
+        <img src="{% static 'Image/Govind Ashramshala logo.png' %}" class="logo" alt="Govind Ashramshala">
+      {% endif %}
+    </a>
+
+    <!-- Mobile hamburger toggle (pure CSS, no JS needed) -->
+    <input type="checkbox" id="menu-toggle" aria-hidden="true">
+    <label for="menu-toggle" class="menu-icon" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+      <ul>
+        <li>
+          <a href="{% url 'school:home' %}"
+             class="nav-link {% if request.resolver_match.url_name == 'home' %}nav-active{% endif %}">
+            HOME
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'school:about' %}"
+             class="nav-link {% if request.resolver_match.url_name == 'about' %}nav-active{% endif %}">
+            ABOUT
+          </a>
+        </li>
+
+        <!-- CAMPUS Dropdown -->
+        <li class="dropdown">
+          <a href="#" class="nav-link dropdown-trigger
+             {% if request.resolver_match.url_name in 'teachers,events,gallery,news' %}nav-active{% endif %}"
+             aria-haspopup="true" aria-expanded="false">
+            CAMPUS <i class="fas fa-chevron-down dropdown-icon"></i>
+          </a>
+          <ul class="drop-item" role="menu">
+            <li role="none">
+              <a href="{% url 'school:teachers' %}" role="menuitem"
+                 class="{% if request.resolver_match.url_name == 'teachers' %}drop-active{% endif %}">
+                <i class="fas fa-chalkboard-teacher"></i> Teachers
+              </a>
+            </li>
+            <li role="none">
+              <a href="{% url 'school:events' %}" role="menuitem"
+                 class="{% if request.resolver_match.url_name == 'events' %}drop-active{% endif %}">
+                <i class="fas fa-calendar-alt"></i> Events
+              </a>
+            </li>
+            <li role="none">
+              <a href="{% url 'school:gallery' %}" role="menuitem"
+                 class="{% if request.resolver_match.url_name == 'gallery' %}drop-active{% endif %}">
+                <i class="fas fa-images"></i> Gallery
+              </a>
+            </li>
+            <li role="none">
+              <a href="{% url 'school:news' %}" role="menuitem"
+                 class="{% if request.resolver_match.url_name == 'news' %}drop-active{% endif %}">
+                <i class="fas fa-newspaper"></i> News
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="{% url 'school:contact' %}"
+             class="nav-link {% if request.resolver_match.url_name == 'contact' %}nav-active{% endif %}">
+            CONTACT US
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'school:register' %}" class="apply-cta">
+            <i class="fas fa-pen-to-square"></i> APPLY NOW
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <!-- =====================================================================
+       END HEADER
+       ===================================================================== -->
+
+  <!-- Main Page Content -->
+  <main class="page-main">
+    {% if messages %}
+      <div class="toast-container" role="alert" aria-live="polite">
+        {% for message in messages %}
+          <div class="toast toast-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">
+            <i class="fas {% if message.tags == 'error' %}fa-exclamation-circle{% else %}fa-check-circle{% endif %}"></i>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block main %}{% endblock %}
+  </main>
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-section">
+        <div class="footer-brand">
+          {% if info.logo %}
+            <img src="{{ info.logo.url }}" alt="{{ info.name }}" style="height:50px; object-fit:contain; margin-bottom:1rem;">
+          {% endif %}
+          <h3 style="color:var(--pure-white); margin-bottom:1rem;">About Our School</h3>
+        </div>
+        <p>{{ info.mission|default:"Govind Ashram Shala Ekshiv is a premier educational institution dedicated to nurturing young minds with a holistic approach to learning." }}</p>
+
+        <div class="social-icons">
+          {% if info.facebook %}
+            <a href="{{ info.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          {% else %}
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          {% endif %}
+          {% if info.instagram %}
+            <a href="{{ info.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          {% else %}
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          {% endif %}
+          {% if info.youtube %}
+            <a href="{{ info.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          {% else %}
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="{% url 'school:home' %}"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="{% url 'school:about' %}"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="{% url 'school:teachers' %}"><i class="fas fa-chevron-right"></i> Teachers</a></li>
+          <li><a href="{% url 'school:events' %}"><i class="fas fa-chevron-right"></i> Events</a></li>
+          <li><a href="{% url 'school:gallery' %}"><i class="fas fa-chevron-right"></i> Gallery</a></li>
+          <li><a href="{% url 'school:news' %}"><i class="fas fa-chevron-right"></i> Latest News</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Contact Details</h3>
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{ info.address|default:"Govind Ashram Shala Ekshiv, Tal-Malashiras, Dist-Solapur" }}</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>{{ info.phone|default:"+91-9960905064" }}</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>{{ info.email|default:"info@govindashramshala.edu.in" }}</span>
+          </div>
+          {% if info.office_hours %}
+          <div class="footer-contact-item">
+            <i class="fas fa-clock"></i>
+            <span>{{ info.office_hours }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; {% now "Y" %} {{ info.name|default:"Govind Ashramshala Ekshiv" }}. All Rights Reserved. Designed with Excellence.</p>
+      <a href="#" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+      </a>
+    </div>
+  </footer>
+  <!-- =====================================================================
+       END FOOTER
+       ===================================================================== -->
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

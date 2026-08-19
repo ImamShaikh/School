@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: #f0f2f5;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 240px;
+    height: 900px;
+    background: #c3d5f5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo
+  {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    height: 95px;
+    width: 105px;
+  }
+  
+  .profile-pic {
+    width: 50px;
+    border-radius: 50%;
+  }
+  
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    margin-top: 10px;
+    color: #333;
+    font-size: 18px;
+    font-weight: bolder;
+    text-decoration: none;
+    border: 25px;
+    background-color: #f0f0f0;
+    border-radius: 18px;
+  }
+  
+  /* .nav-links a, */
+  .nav-links a:hover {
+    background: #6f95f5;
+    font-weight: bolder;
+    color: #feffff;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 900px;
+    background-color: #feffff;
+  }
+  
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #c3d5f5;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .search-box input {
+    padding: 8px 12px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .topbar-right button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  
+  .user-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .user-dropdown img {
+    width: 32px;
+    border-radius: 50%;
+  }
+  
+  .content {
+    padding: 30px;
+    background: white;
+    margin: 20px;
+    border-radius: 12px;
+    flex-grow: 1;
+  }
+  
+/* Contact details*/
+.contact-details-container {
+  width: 1200px;
+  height: 400px;
+  margin: 50px auto;
+  overflow-y: auto;
+  padding: 60px;
+  background-color: #feffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.contact-details-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.contact-table th,
+.contact-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.contact-table thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.contact-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.contact-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Registration Details Page */
+.table-container1 {
+  max-width: 1250px;
+  max-height: 500px;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin: 40px auto;
+  padding: 25px;
+  background: #feffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.table-container1 h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #0c0c0c;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+table {
+  width: 60%;
+  border-collapse: collapse;
+  min-width: 500px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #5be85f;
+  color: white;
+}
+
+thead th {
+  padding: 14px 16px;
+  font-size: 15px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+tbody td {
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #e4e1e1;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Custom Scrollbar */
+.table-container1::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container1::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.table-container1::-webkit-scrollbar-thumb {
+  background-color: #7bd27e;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+/* Add Teacher Page */
+.form-container {
+  width: 500px;
+  margin: 70px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2f3640;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #353b48;
+}
+
+input[type="text"],
+input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dcdde1;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0984e3;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #74b9ff;
+}
+
+/* Dashboard Cards */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card i {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: #0984e3;
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #2f3542;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2d3436;
+}

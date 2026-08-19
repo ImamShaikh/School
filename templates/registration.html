@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Student Admissions Enrollment - {{ info.name }}{% endblock %}
+{% block meta_description %}Apply online for admission at Govind Ashramshala Ekshiv. Fill out our multi-step secure student enrollment registration form.{% endblock %}
+
+{% block main %}
+<!-- Header -->
+<section style="background: linear-gradient(135deg, var(--primary-navy), var(--primary-dark)); color: #fff; text-align: center; padding-block: 60px 40px;">
+  <div class="container">
+    <h1 style="color: #fff; margin-bottom: 0.5rem;">Admissions Enrollment Form</h1>
+    <p style="color: var(--cyan-accent); font-weight: 600; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">शाळा प्रवेश नोंदणी फॉर्म</p>
+  </div>
+</section>
+
+<!-- Multi-step Form Wizard Container -->
+<section style="background-color: var(--off-white);">
+  <div class="container" style="max-width: 800px;">
+    <div id="registration-wizard" style="background-color: var(--pure-white); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); overflow: hidden;">
+      
+      <!-- Progress Bar / Step Headers -->
+      <div class="wizard-steps-header" style="display: flex; border-bottom: 1px solid var(--border-color); background-color: var(--off-white);">
+        <div class="wizard-step active" style="flex: 1; padding: 1.25rem 1rem; text-align: center; font-weight: 600; font-size: 0.85rem; border-bottom: 3px solid transparent; transition: all 0.2s;">
+          <div class="step-num" style="display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background-color: var(--border-color); color: var(--primary-navy); align-items: center; justify-content: center; margin-right: 0.5rem;">1</div>
+          Student Info
+        </div>
+        <div class="wizard-step" style="flex: 1; padding: 1.25rem 1rem; text-align: center; font-weight: 600; font-size: 0.85rem; border-bottom: 3px solid transparent; transition: all 0.2s;">
+          <div class="step-num" style="display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background-color: var(--border-color); color: var(--primary-navy); align-items: center; justify-content: center; margin-right: 0.5rem;">2</div>
+          Address
+        </div>
+        <div class="wizard-step" style="flex: 1; padding: 1.25rem 1rem; text-align: center; font-weight: 600; font-size: 0.85rem; border-bottom: 3px solid transparent; transition: all 0.2s;">
+          <div class="step-num" style="display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background-color: var(--border-color); color: var(--primary-navy); align-items: center; justify-content: center; margin-right: 0.5rem;">3</div>
+          Contact & Aadhaar
+        </div>
+        <div class="wizard-step" style="flex: 1; padding: 1.25rem 1rem; text-align: center; font-weight: 600; font-size: 0.85rem; border-bottom: 3px solid transparent; transition: all 0.2s;">
+          <div class="step-num" style="display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background-color: var(--border-color); color: var(--primary-navy); align-items: center; justify-content: center; margin-right: 0.5rem;">4</div>
+          Review & Submit
+        </div>
+      </div>
+
+      <!-- Actual Form -->
+      <form action="{% url 'school:register' %}" method="post" style="padding: 3rem;">
+        {% csrf_token %}
+        
+        <!-- Step 1: Student Information -->
+        <div class="wizard-panel-step active">
+          <h3 style="margin-bottom: 1.5rem; text-align: left; color: var(--primary-navy);">Student Information</h3>
+          
+          <div class="form-group">
+            <label for="fname">Student's Full Name / विद्यार्थ्याचे पूर्ण नाव <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="fname" name="fname" required placeholder="Enter student's full name">
+          </div>
+          
+          <div class="form-group">
+            <label for="mname">Mother's Full Name / आईचे पूर्ण नाव <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="mname" name="mname" required placeholder="Enter mother's full name">
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="dob">Date of Birth / जन्मतारीख <span style="color:var(--danger-color);">*</span></label>
+              <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender / लिंग <span style="color:var(--danger-color);">*</span></label>
+              <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male / पुरुष</option>
+                <option value="Female">Female / स्त्री</option>
+              </select>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="religion">Religion / धर्म <span style="color:var(--danger-color);">*</span></label>
+              <input type="text" id="religion" name="religion" required placeholder="e.g. Hindu / Muslim / Christian">
+            </div>
+            <div class="form-group">
+              <label for="category">Category / जात वर्ग <span style="color:var(--danger-color);">*</span></label>
+              <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="OBC">OBC / इतर मागासवर्गीय</option>
+                <option value="SC">SC / अनुसूचित जाती</option>
+                <option value="ST">ST / अनुसूचित जमाती</option>
+                <option value="VJNT">VJNT / विमुक्त जाती आणि भटक्या जमाती</option>
+                <option value="OPEN">OPEN / खुला प्रवर्ग</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="pob">Place of Birth / जन्मस्थान <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="pob" name="pob" required placeholder="e.g. Ekshiv / Solapur">
+          </div>
+        </div>
+
+        <!-- Step 2: Address Information -->
+        <div class="wizard-panel-step">
+          <h3 style="margin-bottom: 1.5rem; text-align: left; color: var(--primary-navy);">Permanent Address</h3>
+          
+          <div class="form-group">
+            <label for="street">Street Address / गल्ली किंवा रस्ता पत्ता <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="street" name="street" required placeholder="e.g. House No, Lane Name">
+          </div>
+          
+          <div class="form-group">
+            <label for="landmark">Landmark / ओळख चिन्ह <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="landmark" name="landmark" required placeholder="e.g. Near Hanuman Temple">
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="state">State / राज्य <span style="color:var(--danger-color);">*</span></label>
+              <input type="text" id="state" name="state" required placeholder="e.g. Maharashtra">
+            </div>
+            <div class="form-group">
+              <label for="pincode">Pin Code / पिन कोड <span style="color:var(--danger-color);">*</span></label>
+              <input type="text" id="pincode" name="pincode" required placeholder="6-digit PIN" maxlength="6">
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Contact & Identifications -->
+        <div class="wizard-panel-step">
+          <h3 style="margin-bottom: 1.5rem; text-align: left; color: var(--primary-navy);">Contact & Identifications</h3>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="email">Email Address / ई-मेल आयडी <span style="color:var(--danger-color);">*</span></label>
+              <input type="email" id="email" name="email" required placeholder="parent@domain.com">
+            </div>
+            <div class="form-group">
+              <label for="mob">Mobile Phone Number / मोबाईल क्रमांक <span style="color:var(--danger-color);">*</span></label>
+              <input type="tel" id="mob" name="mob" required placeholder="10-digit mobile" maxlength="10">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="p_adhar">Parent's Aadhar Card Number / पालकांचा आधार क्रमांक <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="p_adhar" name="p_adhar" required placeholder="12-digit UID" maxlength="12">
+          </div>
+          
+          <div class="form-group">
+            <label for="c_adhar">Student's Aadhar Card Number / विद्यार्थ्याचा आधार क्रमांक <span style="color:var(--danger-color);">*</span></label>
+            <input type="text" id="c_adhar" name="c_adhar" required placeholder="12-digit UID" maxlength="12">
+          </div>
+        </div>
+
+        <!-- Step 4: Review & Submit -->
+        <div class="wizard-panel-step">
+          <h3 style="margin-bottom: 1.5rem; text-align: left; color: var(--primary-navy);">Review & Security Verification</h3>
+          
+          <!-- Summary Review panel -->
+          <div id="review-content" style="background-color: var(--off-white); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--radius-sm); margin-bottom: 2rem; font-size: 0.95rem;">
+            <!-- Rendered by JS wizard logic -->
+          </div>
+
+          <!-- Captcha Code -->
+          <div class="form-group" style="background-color: var(--off-white); padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 2rem;">
+            <label style="margin-bottom: 0.75rem; display: block; font-weight: 600;">Security Validation <span style="color: var(--danger-color);">*</span></label>
+            <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+              <div id="captcha-display" style="font-family: monospace; font-size: 1.5rem; font-weight: 700; background-color: var(--primary-navy); color: #fff; padding: 0.5rem 1.5rem; letter-spacing: 0.25em; border-radius: 4px; user-select: none;">
+                Loading...
+              </div>
+              <button id="captcha-refresh" class="btn" style="padding: 0.5rem 1rem; background-color: var(--border-color); color: var(--primary-navy); font-size: 0.9rem;" title="Refresh Captcha">
+                <i class="fas fa-sync-alt"></i> Refresh
+              </button>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <input type="text" id="captcha-input" placeholder="Type captcha code above" required style="margin-bottom: 0; flex-grow: 1;">
+              <span id="captcha-status" style="font-weight: 600; font-size: 0.9rem; min-width: 90px;"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wizard Navigation Controls -->
+        <div class="wizard-actions" style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 2rem; margin-top: 2rem;">
+          <button type="button" class="btn btn-secondary btn-prev" style="display: none;"><i class="fas fa-chevron-left"></i> Previous</button>
+          <div style="margin-left: auto;">
+            <button type="button" class="btn btn-primary btn-next">Next <i class="fas fa-chevron-right"></i></button>
+            <button type="submit" class="btn btn-accent btn-submit" style="display: none;" disabled><i class="fas fa-check"></i> Submit Application</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

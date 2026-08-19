@@ -1,0 +1,49 @@
+# =============================================================================
+#  render.yaml  —  Infrastructure-as-Code for Render.com
+#  Docs: https://render.com/docs/render-yaml-reference
+# =============================================================================
+
+services:
+  - type: web
+    name: govind-ashramshala
+    runtime: python
+    region: singapore          # closest to India
+
+    # Root of the Django project (where manage.py lives)
+    rootDir: govind
+
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --no-input
+      python manage.py migrate --no-input
+
+    startCommand: gunicorn govind.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+
+    plan: free                 # change to "starter" for always-on
+
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true    # Render auto-generates a secure value
+
+      - key: DEBUG
+        value: "False"
+
+      - key: ALLOWED_HOSTS
+        value: "govind-ashramshala.onrender.com"
+
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://govind-ashramshala.onrender.com"
+
+      - key: DATABASE_URL
+        fromDatabase:
+          name: govind-db      # matches the database block below
+          property: connectionString
+
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+
+databases:
+  - name: govind-db
+    databaseName: govindschool
+    plan: free                 # Render free PostgreSQL (90-day trial, then paid)
+    region: singapore

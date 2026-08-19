@@ -1,0 +1,67 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+
+{% block title %}{% if edit_user %}Edit User - Admin Portal{% else %}Add Trusted User - Admin Portal{% endif %}{% endblock %}
+{% block page_title %}{% if edit_user %}Edit Details: {{ edit_user.username }}{% else %}Add New Trusted User{% endif %}{% endblock %}
+
+{% block open %}
+<div style="margin-bottom: 1.5rem;">
+  <a href="{% url 'Appadmin:user-list' %}" class="btn-admin btn-admin-secondary">
+    <i class="fas fa-arrow-left"></i> Back to List
+  </a>
+</div>
+
+<div class="admin-card-form">
+  <form method="post">
+    {% csrf_token %}
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div class="form-group-admin">
+        <label for="username">Username <span style="color:var(--admin-danger);">*</span></label>
+        <input type="text" id="username" name="username" class="form-control-admin" value="{{ edit_user.username|default:'' }}" {% if edit_user }disabled style="background-color:#F1F5F9; cursor:not-allowed;"{% endif %} required placeholder="Enter login username">
+        {% if edit_user %}
+        <small style="color: var(--admin-text-muted);">Username cannot be changed after creation.</small>
+        {% endif %}
+      </div>
+      <div class="form-group-admin">
+        <label for="email">Email Address <span style="color:var(--admin-danger);">*</span></label>
+        <input type="email" id="email" name="email" class="form-control-admin" value="{{ edit_user.email|default:'' }}" required placeholder="e.g. editor@school.com">
+      </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div class="form-group-admin">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" class="form-control-admin" value="{{ edit_user.first_name|default:'' }}" placeholder="First name">
+      </div>
+      <div class="form-group-admin">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" class="form-control-admin" value="{{ edit_user.last_name|default:'' }}" placeholder="Last name">
+      </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div class="form-group-admin">
+        <label for="phone_no">Phone Number</label>
+        <input type="text" id="phone_no" name="phone_no" class="form-control-admin" value="{{ edit_user.profile.phone_no|default:'' }}" placeholder="10-digit number">
+      </div>
+      <div class="form-group-admin">
+        <label for="password">Password {% if not edit_user %}<span style="color:var(--admin-danger);">*</span>{% endif %}</label>
+        <input type="password" id="password" name="password" class="form-control-admin" {% if not edit_user %}required{% endif %} placeholder="{% if edit_user %}Leave blank to keep current password{% else %}Enter login password{% endif %}">
+      </div>
+    </div>
+    
+    <div class="form-group-admin">
+      <label for="address">Contact Address</label>
+      <textarea id="address" name="address" class="form-control-admin" rows="3" placeholder="Enter home or office address...">{{ edit_user.profile.address|default:'' }}</textarea>
+    </div>
+    
+    <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+      <button type="submit" class="btn-admin btn-admin-primary" style="padding-inline: 2rem;">
+        <i class="fas fa-save"></i> Save Account Details
+      </button>
+      <a href="{% url 'Appadmin:user-list' %}" class="btn-admin btn-admin-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

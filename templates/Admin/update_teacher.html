@@ -1,0 +1,40 @@
+{% extends "Admin/first.html" %}
+{% load static %}
+{% block open %}
+<div class="form-container">
+    <h2>Update Teacher</h2>
+    <form action="/update/{{teacher.id}}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="name">Name of Teacher</label>
+            <input type="text" id="name"  value="{{ teacher.name }}" required name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Teaching Subject</label>
+            <input type="text" id="subject" value="{{ teacher.teach_sub}}" required  name="subject">
+        </div>
+
+        <div class="form-group">
+            <label for="expertise">Expertise</label>
+            <input type="text" id="expertise" value="{{ teacher.expertise }}" required name="expertise">
+        </div>
+
+        <div class="form-group">
+            <label for="image">Profile Photo</label>
+            <input type="file" id="image"  required name="image">
+            {% if teacher.image %}
+                <img src="{{ teacher.image.url }}" alt="Current Photo" style="height: 90px;">
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="contact">Contact No.</label>
+            <input type="tel" id="contact" name="contact" value="{{ teacher.p_no }}" required>
+        </div>
+
+        <button type="submit" class="submit-btn"> Update Teacher</button>
+    </form>
+</div>
+{% endblock open %}
