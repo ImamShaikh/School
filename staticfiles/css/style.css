@@ -470,13 +470,23 @@ h1 {
 
 .teacher img
 {
-    height: 120px;
-    width: 120px;
-    margin-left:  65px;
-    margin-top: 5px;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 60px;   
+    width: 120px !important;
+    height: 120px !important;
+
+    min-width: 120px !important;
+    min-height: 120px !important;
+    max-width: 120px !important;
+    max-height: 120px !important;
+
+    display: block !important;
+    margin: 5px auto 10px auto !important;
+
+    border-radius: 50% !important;
+
+    object-fit: cover !important;
+    object-position: center top !important;
+
+    flex-shrink: 0;
 }
 .teacher h3
 {
