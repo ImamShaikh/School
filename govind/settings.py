@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',            # Cloudinary SDK
+    'cloudinary_storage',   # Django storage backend — must come BEFORE staticfiles
     'school',
     'Appadmin',
 ]
@@ -148,29 +150,61 @@ USE_TZ = True
 
 
 # ---------------------------------------------------------------------------
-# STATIC FILES  (WhiteNoise serves them on Render)
+# STATIC FILES  (WhiteNoise serves them on Render — unchanged)
 # ---------------------------------------------------------------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# WhiteNoise: serve compressed + cached static files
+# ---------------------------------------------------------------------------
+# CLOUDINARY  —  Persistent media storage (images survive Render restarts)
+# ---------------------------------------------------------------------------
+# Read CLOUDINARY_URL from the environment (Render dashboard / local .env).
+# Format:  cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+# NEVER hardcode credentials here.
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
+
+if CLOUDINARY_URL:
+    import cloudinary
+    cloudinary.config(
+        cloudinary_url=CLOUDINARY_URL,
+        secure=True,   # Always deliver images over HTTPS
+    )
+    _MEDIA_BACKEND = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    # Fallback: local filesystem.
+    # Uploads will be lost on Render restart — set CLOUDINARY_URL to fix this.
+    import warnings
+    warnings.warn(
+        "CLOUDINARY_URL is not set. Media uploads will use the local filesystem. "
+        "Set CLOUDINARY_URL in your .env (local) or Render Environment Variables (production).",
+        stacklevel=2,
+    )
+    _MEDIA_BACKEND = 'django.core.files.storage.FileSystemStorage'
+
+# WhiteNoise handles STATIC files; Cloudinary handles MEDIA (user uploads).
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": _MEDIA_BACKEND,
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
-
 # ---------------------------------------------------------------------------
-# MEDIA FILES  (user uploads — NOTE: Render has an ephemeral filesystem)
-# For production, consider moving to Cloudinary / AWS S3.
+# MEDIA FILES  (served via Cloudinary CDN in production)
+# MEDIA_ROOT / MEDIA_URL are used only for local dev when CLOUDINARY_URL is
+# not yet configured.
 # ---------------------------------------------------------------------------
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# django-cloudinary-storage settings
+CLOUDINARY_STORAGE = {
+    'MEDIA_TAG': 'govind-ashramshala',   # Tags all uploads; useful for Cloudinary filtering
+}
+
 
 
 # ---------------------------------------------------------------------------

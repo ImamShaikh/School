@@ -34,3 +34,7 @@ tzdata==2025.2
 # Captcha (optional)
 captcha==0.7.1
 django-recaptcha==4.1.0
+
+# Cloudinary persistent media storage
+cloudinary==1.44.0
+django-cloudinary-storage==0.3.0

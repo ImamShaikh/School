@@ -1,0 +1,57 @@
+# =============================================================================
+# .gitignore  —  Govind Ashramshala Django Project
+# CRITICAL: .env must NEVER be committed (it contains secrets)
+# =============================================================================
+
+# --- Environment / Secrets ---
+.env
+*.env
+.env.local
+.env.production
+.env.*
+!.env.example         # Allow the example template (no real secrets)
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# --- Virtual environments ---
+venv/
+env/
+.venv/
+ENV/
+
+# --- Django ---
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/           # Local media (use Cloudinary in production)
+staticfiles/     # Collected static files (auto-generated on build)
+manifest/        # Cloudinary staticfiles manifest (auto-generated)
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Testing ---
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# --- Render ---
+.render/

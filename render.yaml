@@ -42,6 +42,16 @@ services:
       - key: PYTHON_VERSION
         value: "3.12.0"
 
+      # -----------------------------------------------------------------------
+      # CLOUDINARY — Persistent media storage
+      # Set this manually in the Render Dashboard → Environment Variables.
+      # Get your URL from: https://cloudinary.com/console → Dashboard → API Keys
+      # Format: cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+      # NEVER hardcode real credentials here — this file is committed to Git.
+      # -----------------------------------------------------------------------
+      - key: CLOUDINARY_URL
+        sync: false   # Must be set manually in Render dashboard (contains secret)
+
 databases:
   - name: govind-db
     databaseName: govindschool
