@@ -18,9 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
+# ---------------------------------------------------------------------------
+# Lightweight health-check endpoint for uptime monitoring (e.g. UptimeRobot).
+# Returns HTTP 200 "OK" instantly — no DB, no auth, no templates.
+# ---------------------------------------------------------------------------
+@csrf_exempt
+def health_check(request):
+    return HttpResponse("OK", content_type="text/plain", status=200)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('health/', health_check, name='health-check'),  # uptime monitoring
     path('', include('school.urls')),
     path('manager/', include('Appadmin.urls')),
 ]
